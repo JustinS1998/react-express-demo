@@ -15,11 +15,24 @@ function App(props) {
         setText(event.target.value);
     };
 
+    const postData = async (url='', data={}) => {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        });
+        return response.json();
+    };
+
+    const handleClick = async () => {
+        postData('/message', {message: text})
+            .catch((error) => console.error(error));
+    };
+
     return (
         <>
         <p>{!data ? "Loading..." : data}</p>
         <input type="text" value={text} onChange={handleChange}/>
-        <button>Submit</button>
+        <button onClick={handleClick}>Submit</button>
         </>
     );
 }
