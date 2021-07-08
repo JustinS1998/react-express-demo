@@ -21,12 +21,18 @@ function App(props) {
             .then((response) => console.log(response))
             .catch((error) => console.error(error));
     };
+    const handleClickGet = async () => {
+        axios.get('/message')
+            .then((response) => console.log(response))
+            .catch((error) => console.error(error));
+    };
 
     return (
         <>
         <p>{!data ? "Loading..." : data}</p>
         <input type="text" value={text} onChange={handleChange}/>
         <button onClick={handleClick}>Submit</button>
+        <button onClick={handleClickGet}>Get Data</button>
         </>
     );
 }

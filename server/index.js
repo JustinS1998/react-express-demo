@@ -31,3 +31,17 @@ app.post("/message", (req, res) => {
     })
     .catch((error) => console.error(error));
 })
+
+app.get("/message", (req, res) => {
+    MongoClient.connect(connectionString, {useUnifiedTopology:true})
+    .then((client) => {
+        console.log('Connected to database');
+        const db = client.db('test');
+        const testCollection = db.collection('testCollection');
+        testCollection.findOne({}, (err, result) => {
+            if (err) throw err;
+            console.log(result["message"]);
+        });
+    })
+    .catch((error) => console.error(error));
+});
