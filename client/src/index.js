@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+import "./style.css";
+
 function App(props) {
     const [data, setData] = useState(null);
     const [text, setText] = useState('');
