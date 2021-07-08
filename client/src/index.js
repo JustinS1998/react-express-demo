@@ -15,16 +15,10 @@ function App(props) {
         setText(event.target.value);
     };
 
-    const postData = async (url='', data={}) => {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data)
-        });
-        return response.json();
-    };
-
+    const axios = require('axios');
     const handleClick = async () => {
-        postData('/message', {message: text})
+        axios.post('/message', {"message": text})
+            .then((response) => console.log(response))
             .catch((error) => console.error(error));
     };
 
