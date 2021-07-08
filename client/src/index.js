@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 function App(props) {
     const [data, setData] = useState(null);
     const [text, setText] = useState('');
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         fetch("/api")
@@ -17,22 +18,33 @@ function App(props) {
 
     const axios = require('axios');
     const handleClick = async () => {
-        axios.post('/message', {"message": text})
+        axios.post('/message', { "message": text })
             .then((response) => console.log(response))
             .catch((error) => console.error(error));
     };
     const handleClickGet = async () => {
         axios.get('/message')
-            .then((response) => console.log(response))
+            .then((response) => {
+                setMessages([...response.data]);
+            })
             .catch((error) => console.error(error));
     };
 
     return (
         <>
-        <p>{!data ? "Loading..." : data}</p>
-        <input type="text" value={text} onChange={handleChange}/>
-        <button onClick={handleClick}>Submit</button>
-        <button onClick={handleClickGet}>Get Data</button>
+            <p>{!data ? "Loading..." : data}</p>
+            <div>
+                <input type="text" value={text} onChange={handleChange} />
+                <button onClick={handleClick}>Submit</button>
+            </div>
+            <div>
+                <button onClick={handleClickGet}>Get Data</button>
+                <li>
+                    {messages.map((element) => {
+                        return <ul key={element["message"]}>{element["message"]}</ul>
+                    })}
+                </li>
+            </div>
         </>
     );
 }

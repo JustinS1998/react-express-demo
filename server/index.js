@@ -38,9 +38,9 @@ app.get("/message", (req, res) => {
         console.log('Connected to database');
         const db = client.db('test');
         const testCollection = db.collection('testCollection');
-        testCollection.findOne({}, (err, result) => {
+        testCollection.find({}).toArray((err, result) => {
             if (err) throw err;
-            console.log(result["message"]);
+            res.send(result);
         });
     })
     .catch((error) => console.error(error));
