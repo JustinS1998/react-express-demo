@@ -9,6 +9,7 @@ function App(props) {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+        updateMessages();
         fetch("/api")
             .then((res) => res.json())
             .then((data) => setData(data.message));
@@ -21,10 +22,13 @@ function App(props) {
     const axios = require('axios');
     const handleClick = async () => {
         axios.post('/message', { "message": text })
-            .then((response) => console.log(response))
-            .catch((error) => console.error(error));
+            .then((response) => {
+                console.log(response);
+                updateMessages();
+            })
+            .catch((error) => console.error(error)); 
     };
-    const handleClickGet = async () => {
+    const updateMessages = async () => {
         axios.get('/message')
             .then((response) => {
                 setMessages([...response.data]);
@@ -40,7 +44,7 @@ function App(props) {
                 <button onClick={handleClick}>Submit</button>
             </div>
             <div>
-                <button onClick={handleClickGet}>Get Data</button>
+                <button onClick={updateMessages}>Get Data</button>
                 <li>
                     {messages.map((element) => {
                         return <ul key={element["message"]}>{element["message"]}</ul>

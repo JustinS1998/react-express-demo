@@ -27,7 +27,11 @@ app.post("/message", (req, res) => {
         console.log('Connected to database');
         const db = client.db('test');
         const testCollection = db.collection('testCollection');
-        testCollection.insertOne(req.body);
+        testCollection.insertOne(req.body, (err, myRes) => {
+            if (err) throw err;
+            console.log("item inserted");
+            res.send("item inserted");
+        });
     })
     .catch((error) => console.error(error));
 })
