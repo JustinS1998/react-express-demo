@@ -53,7 +53,7 @@ function App(props) {
                 <button onClick={handleClick}>Submit</button>
             </div>
             <div>
-                <button onClick={updateMessages}>Get Data</button>
+                <button onClick={updateMessages}>Refresh Data</button>
                 <li>
                     {messages.map((element) => {
                         return <ul key={element["message"]} onClick={deleteMessage}>{element["message"]}</ul>
