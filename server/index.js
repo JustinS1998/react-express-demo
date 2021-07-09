@@ -24,7 +24,7 @@ app.post("/message", (req, res) => {
     console.log(req.body);
     MongoClient.connect(connectionString, {useUnifiedTopology:true})
     .then((client) => {
-        console.log('Connected to database');
+        // console.log('Connected to database');
         const db = client.db('test');
         const testCollection = db.collection('testCollection');
         testCollection.insertOne(req.body, (err, myRes) => {
@@ -39,7 +39,7 @@ app.post("/message", (req, res) => {
 app.get("/message", (req, res) => {
     MongoClient.connect(connectionString, {useUnifiedTopology:true})
     .then((client) => {
-        console.log('Connected to database');
+        // console.log('Connected to database');
         const db = client.db('test');
         const testCollection = db.collection('testCollection');
         testCollection.find({}).toArray((err, result) => {
@@ -48,4 +48,10 @@ app.get("/message", (req, res) => {
         });
     })
     .catch((error) => console.error(error));
+});
+
+app.delete("/message", (req, res) => {
+    console.log("Got a DELETE request");
+    console.log(req.body);
+    res.send("Item deleted");
 });

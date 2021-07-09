@@ -35,6 +35,15 @@ function App(props) {
             })
             .catch((error) => console.error(error));
     };
+    const deleteMessage = async (e) => {
+        console.log(e.target.textContent);
+        axios.delete("/message", {data:{"message":e.target.textContent}})
+            .then((response) => {
+                console.log(response);
+                updateMessages();
+            })
+            .catch((error) => console.error(error));
+    }
 
     return (
         <>
@@ -47,7 +56,7 @@ function App(props) {
                 <button onClick={updateMessages}>Get Data</button>
                 <li>
                     {messages.map((element) => {
-                        return <ul key={element["message"]}>{element["message"]}</ul>
+                        return <ul key={element["message"]} onClick={deleteMessage}>{element["message"]}</ul>
                     })}
                 </li>
             </div>
