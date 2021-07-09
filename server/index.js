@@ -15,9 +15,12 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server" });
 });
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const MongoClient = require('mongodb').MongoClient;
-const username = 'admin';
-const password = '8uEUQySVIJkTNB9T';
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
 const connectionString = `mongodb+srv://${username}:${password}@cluster0.drkd2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 app.post("/message", (req, res) => {
     console.log('Got a POST request');
@@ -63,3 +66,4 @@ app.delete("/message", (req, res) => {
         })
         .catch((error) => console.error(error));
 });
+
