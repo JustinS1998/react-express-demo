@@ -18,6 +18,11 @@ app.get("/api", (req, res) => {
 const dotenv = require("dotenv");
 dotenv.config();
 
+const allLetter = (s) => {
+    const letters = /^[A-Za-z]+$/;
+    return (s.match(letters)) ? true : false;
+};
+
 const MongoClient = require('mongodb').MongoClient;
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
@@ -25,6 +30,12 @@ const connectionString = `mongodb+srv://${username}:${password}@cluster0.drkd2.m
 app.post("/message", (req, res) => {
     console.log('Got a POST request');
     console.log(req.body);
+    if (!allLetter(req.body["message"])) {
+        res.send("could not insert, only use letters");
+        console.log("could not insert, only use letters");
+        return;
+    }
+
     MongoClient.connect(connectionString, { useUnifiedTopology: true })
         .then((client) => {
             // console.log('Connected to database');
